@@ -4,18 +4,20 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { AuthContext } from "../../CustomHooks/Context/AuthProvider";
 import Search from "../Search/Search";
+import MessagePopUp from "../MessagePopUp/MessagePopUp";
 
-function AddCandidate(){
+function AddCandidate(setCertificateUploadData){
     const [image, setImage] = useState(null);
     //const [logo, setLogo] = useState(null);
     const hiddenFileInput = useRef(null);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { userId, userRole } = useContext(AuthContext);
     const [schoolId, setSchoolId] = useState("");
     const [studentId, setStudentId] = useState("");
     const [schoolSearchInputData, setSchoolSearchInputData] = useState(null);
     const [schoolSearchData, setSchoolSearchData] = useState(null);
     const [Name, SetName] = useState(null);
+    const [signUpMessage, setSignUpMessage] = useState("");
     const [formData, setFormData] = useState({
         name: "",
         reg_no: "",
@@ -52,8 +54,40 @@ function AddCandidate(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         localStorage.setItem('data', JSON.stringify(formData));
-        navigate("/print");
-        console.log(formData);
+        // navigate("/print");
+        console.log(formData);if (
+            !formData.name ||
+            !formData.reg_no ||
+            !formData.fathers_name ||
+            !formData.ref_no ||
+            !formData.date_of_issue ||
+            !formData.image ||
+            !formData.course
+          ) {
+            setSignUpMessage("Please fill out all fields.");
+            return;
+          }
+          if (userRole === "school") {
+            api
+              .post(`/users/${studentId}/certificates`, formData)
+              .then((response) => {
+                setCertificateUploadData(response.data);
+                console.log(response.data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            api
+              .post(`/users/${schoolId}/certificates`, formData)
+              .then((response) => {
+                setCertificateUploadData(response.data);
+                console.log(response.data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
     };
 
     const handleSchoolData = () => {
@@ -96,6 +130,9 @@ function AddCandidate(){
 
     return (
         <>
+            {signUpMessage && (
+                <MessagePopUp message={signUpMessage} setMessage={setSignUpMessage} />
+            )}
             <div className="bgcolor">
                 <Box sx={{ display: "flex" }}>
                     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
