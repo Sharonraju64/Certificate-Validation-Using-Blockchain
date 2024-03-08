@@ -4,30 +4,21 @@ import { useNavigate } from "react-router-dom";
 
 function AddCandidate(){
     const [image, setImage] = useState(null);
+    //const [logo, setLogo] = useState(null);
     const hiddenFileInput = useRef(null);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        name: "AMIT KUMAR",
-        reg_no: "A7/IND/7667",
-        fathers_name: "MR. ALOK NATH",
-        to: "17-09-2023",
-        ref_no: "BU88-98897-989",
-        from: "17-06-2023",
-        centre_head: "PRAKASH JHA",
-        date_of_issue: "17-06-2023",
-        grade: "A+",
-        image: "https://images.unsplash.com/photo-1602133187081-4874fdbd555c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        name: "",
+        reg_no: "",
+        fathers_name: "",
+        ref_no: "",
+        date_of_issue: "",
+        grade: "",
+        image: "",
         company_name: "VASIREDDY VENKATADRI INSTITUTE OF TECHNOLOGY",
-        logo: "https://codingmstr.com/img/logo-white.png",
-        services: "AUTONOMOUS",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/e/ec/VVIT_Logo.png",
         address: "NUMBUR - 522508, ANDHRA PRADESH, INDIA",
-        phone: "+91-8789529215",
-        email: "code@codingmstr.com",
-        website: "www.codingmstr.com",
-        pan: "AAW**UUUC",
-        uan: "BK26*****709",
-        gst: "10AKJHKJG31CIZ5",
-        topics: "We offer a comprehensive range of services encompassing both Static and Dynamic Website Development, Android and iOS App Development, as well as expertise in cross-platform mobile app development using technologies such as Flutter. Our proficiency extends to backend development with languages like C#, Java, and Spring Boot",
+        course: "",
     });
 
     const handleChange = (e) => {
@@ -38,64 +29,35 @@ function AddCandidate(){
         }));
     };
 
-    /*useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        try {
-            const response = localStorage.getItem('data');
-            setFormData(JSON.parse(response));
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };*/
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         localStorage.setItem('data', JSON.stringify(formData));
         navigate("/print");
+        console.log(formData);
     };
 
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        const imgname = event.target.files[0].name;
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            const img = new Image();
-            img.src = reader.result;
-            img.onload = () => {
-                const canvas = document.createElement("canvas");
-                const maxSize = Math.max(img.width, img.height);
-                canvas.width = maxSize;
-                canvas.height = maxSize;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(
-                    img,
-                    (maxSize - img.width) / 2,
-                    (maxSize - img.height) / 2
-                );
-                canvas.toBlob(
-                    (blob) => {
-                        const file = new File([blob], imgname, {
-                            type: "image/png",
-                            lastModified: Date.now(),
-                        });
-                        setImage(file);
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            image: file,
-                        }));
-                    },
-                    "image/jpeg",
-                    0.8
-                );
-            };
-        };
+        setImage(file);
+        setFormData((formData) => ({
+            ...formData,
+            image: URL.createObjectURL(file),
+        }));
     };
+    // const handleLogoChange =(event) =>{
+    //     const file1 = event.target.files[1];
+    //     /*const file = new File([blob], imgname, {
+    //         type: "image/png",
+    //         lastModified: Date.now(),
+    //     });*/
+    //     setLogo(file1);
+    //     setFormData((formData) => ({
+    //         ...formData,
+    //         logo: URL.createObjectURL(file1),
+    //     }));
+    // }
+    
 
     const handleClick = (event) => {
         hiddenFileInput.current.click();
@@ -114,7 +76,7 @@ function AddCandidate(){
                             }}
                         >
                             <Box height={10} />
-                            <Typography variant="h5" align="center">
+                            <Typography variant="h3" align="center">
                                 Add Details to Create Certificate
                             </Typography>
                             <div className="w-full max-w-md mx-auto my-10">
@@ -161,34 +123,6 @@ function AddCandidate(){
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
                                     </div>
-
-                                    {/* Add more fields */}
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company_name">
-                                            From
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="from"
-                                            value={formData.from}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-
-                                    {/* Add more fields */}
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company_name">
-                                            To
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="to"
-                                            value={formData.to}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
                                     {/* Add more fields */}
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="department">
@@ -198,20 +132,6 @@ function AddCandidate(){
                                             type="text"
                                             name="ref_no"
                                             value={formData.ref_no}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-
-                                    {/* Add more fields */}
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Centre Head
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="centre_head"
-                                            value={formData.centre_head}
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
@@ -240,7 +160,7 @@ function AddCandidate(){
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
                                     </div>
-                                    <div className="mb-4">
+                                    {/*<div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
                                             Company Name
                                         </label>
@@ -263,32 +183,7 @@ function AddCandidate(){
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Image URL
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="image"
-                                            value={formData.image}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Services
-                                        </label>
-                                        <textarea
-                                            type="text"
-                                            name="services"
-                                            value={formData.services}
-                                            onChange={handleChange}
-                                            rows={4}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        ></textarea>
-                                    </div>
+                                    </div> 
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
                                             Address
@@ -300,95 +195,22 @@ function AddCandidate(){
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
-                                    </div>
+                                    </div>*/}
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Phone
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Email
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Website
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="website"
-                                            value={formData.website}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            PAN
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="pan"
-                                            value={formData.pan}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            UAN
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="uan"
-                                            value={formData.uan}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            GST
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="gst"
-                                            value={formData.gst}
-                                            onChange={handleChange}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Topics
+                                            Course
                                         </label>
                                         <textarea
                                             name="topics"
-                                            value={formData.topics}
+                                            value={formData.course}
                                             onChange={handleChange}
-                                            rows={7}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         ></textarea>
                                     </div>
-                                    {/* <div className="image-upload-container mb-10" style={{ maxWidth: "50%" }}>
+                                    <div className="image-upload-container mb-10" style={{ maxWidth: "30%" }}>
                                         <div className="box-decoration">
                                             <label htmlFor="image-upload-input" className="image-upload-label">
-                                                {image ? image.name : "Choose an image"}
+                                                {image ? image.name : "Photo"}
                                             </label>
                                             <div onClick={handleClick} style={{ cursor: "pointer" }}>
                                                 {image ? (
@@ -396,7 +218,6 @@ function AddCandidate(){
                                                 ) : (
                                                     <img src="./photo.png" alt="upload image" className="img-display-before" />
                                                 )}
-
                                                 <input
                                                     id="image-upload-input"
                                                     type="file"
@@ -407,9 +228,30 @@ function AddCandidate(){
                                                 />
                                             </div>
                                         </div>
-                                    </div> */}
+                                    </div>
+                                    {/*<div className="image-upload-container mb-10" style={{ maxWidth: "30%" }}>
+                                        <div className="box-decoration">
+                                            <label htmlFor="image-upload-input" className="image-upload-label">
+                                                {image ? image.name : "Institute Logo"}
+                                            </label>
+                                            <div onClick={handleClick} style={{ cursor: "pointer" }}>
+                                                {image ? (
+                                                    <img src={URL.createObjectURL(logo)} alt="upload image" className="img-display-after" />
+                                                ) : (
+                                                    <img src="./photo.png" alt="upload image" className="img-display-before" />
+                                                )}
+                                                <input
+                                                    id="image-upload-input"
+                                                    type="file"
+                                                    name="image"
+                                                    onChange={handleLogoChange}
+                                                    ref={hiddenFileInput}
+                                                    style={{ display: "none" }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>*/}
                                     {/* Add other fields similarly */}
-
                                     {/* Submit button */}
                                     <div className="flex items-center justify-center">
                                         <button
