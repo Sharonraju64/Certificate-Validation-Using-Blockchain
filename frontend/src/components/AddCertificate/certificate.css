@@ -1,0 +1,171 @@
+.printcontainer {
+    margin-left: 200px;
+    margin-right: 200px;
+  }
+  .certificate-container {
+    padding: 50px;
+    width: 100%;
+  }
+  .student-name {
+    font-size: 14px;
+    /* text-decoration: underline; */
+    color: rgb(201, 10, 10);
+    font-weight: bold;
+  }
+  .hrStyle {
+    color: rgb(201, 10, 10);
+    border: 1px solid rgb(201, 10, 10);
+    margin-right: 20px;
+    /* margin-left: 150px; */
+  }
+  
+  .certificate-title {
+    text-align: center;
+    width: 85%;
+    margin: auto;
+    padding: 3px;
+    font-size: 16px;
+  }
+  .headtxt {
+    text-align: center;
+    color: #3c0008;
+    padding-top: 20px;
+    font-size: 18px;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .image{
+    height: 100px;
+    width: 100px;
+  }
+  .degree{
+    color: rgb(255, 0, 0);
+  }
+  /*.certificate01 {
+    border: 8px solid #0c5280;
+    padding: 25px;
+    height: auto;
+    position: relative;
+  }*/
+  .certificate {
+    border: 8px solid #0c5280;
+    padding: 25px;
+    height: auto;
+    position: relative;
+    /*background-color: #e6c491;*/
+  }
+  
+  .certificate:after {
+    content: "";
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+    background-repeat: no-repeat;
+    /* background-image: url(https://codingmstr.com/img/logo-white.png); */
+    background-size: 100%;
+    z-index: -1;
+    opacity: 0.08;
+  }
+  
+  /* .certificate01:after {
+    content: "";
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+    background-image: url(https://ccadlab.com/img/logo.png);
+    background-size: 100%;
+    /* background-repeat: no-repeat; */
+    /* background-size: contain; */
+    /*z-index: -1;
+    opacity: 0.08; */
+  
+  .certificate-header > .logo {
+    width: 98px;
+    height: 110px;
+    padding: 3px;
+  }
+  .logo{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .qrcode {
+    max-height: 80px;
+    max-width: 80px;
+  }
+  
+  .certificate-body {
+    text-align: center;
+    margin-top: -15px;
+  }
+  
+  h4 {
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 30px;
+    color: #0c5280;
+    font-style: italic; /* Make the text italic */
+  }
+  
+  .certificate-content {
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .about-certificate {
+    width: 380px;
+    margin: 0 auto;
+  }
+  
+  .topic-description {
+    text-align: center;
+  }
+  
+  path {
+    fill: transparent;
+    width: 582px;
+  }
+  
+  svg {
+    width: 513px;
+  }
+  
+  textPath {
+    width: 399px;
+  }
+  
+  .curve {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer {
+    text-align: center;
+    width: 76%;
+    margin: auto;
+    padding: 10px;
+  }
+  
+  .three-columns-grid {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* columns */
+  .three-columns-grid > * {
+    padding: 1rem;
+  }
+  
