@@ -43,8 +43,8 @@ const Search = ({
       console.log(item);
     } else {
       setName(`${item?.first_name} ${item?.last_name}`);
-      setEmail(item?.email);
       setStudentId(item?.id);
+      console.log(item);
     }
     searchRef.current.blur();
   };
@@ -105,26 +105,26 @@ const Search = ({
         <div className="search-results">
           {searchResults?.map((item, index) => (
             <div key={index} className="search-data-results">
-              <span>
+              {/* <span>
                 <span className="searchIcons">
                   {searchType === "school" ? (
                     <FcLibrary />
                   ) : (
                     <FcGraduationCap />
                   )}
-                </span>
+                </span> */}
                 {searchType === "school"
                   ? item.school_name
                   : `${item?.first_name} ${item?.last_name}`}
-              </span>
-              <span>
+              {/* </span> */}
+              {/* <span>
                 <span className="searchIcons">
                   <FcGlobe />
-                </span>
+                </span> */}
                 {searchType === "school"
                   ? item.school_location
                   : item.student_location}
-              </span>
+              {/* </span> */}
               <button
                 onClick={() => handleSearchFromFill(searchType, item)}
                 className="searchDataButton"

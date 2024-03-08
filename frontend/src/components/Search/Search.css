@@ -10,6 +10,7 @@
 
 .search-container input[type="text"] {
   padding: 10px;
+  color: black;
   /* padding-bottom: 0px; */
   border-bottom: 0px;
   font-size: 16px;
@@ -45,17 +46,17 @@
   z-index: 1;
 }
 .search-data-results {
+  padding: 0px; 
   /* display: flex; */
-  /* justify-content: space-between; */
+  position: relative;
 }
 .search-data-results span {
-  /* padding: 10px; */
+  padding: 0px; 
   display: flex;
+  position: relative;
 }
 .search-data-results .searchIcons {
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
+  align-items: right;
 }
 .search-data-results .searchDataButton {
   background-color: #65d045;

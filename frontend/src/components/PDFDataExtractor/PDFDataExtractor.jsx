@@ -90,6 +90,7 @@ function PDFDataExtractor({ pdfData, setCertificateUploadData }) {
       .get("/schools")
       .then((results) => {
         setSchoolSearchData(results.data);
+        console.log(results.data);
       })
       .catch((error) => {
         console.log(error);

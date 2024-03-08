@@ -1,12 +1,21 @@
-import { useState, useRef, /*useEffect*/} from "react";
+import { useState, useRef, useEffect, useContext} from "react";
 import { Typography, Box, Card } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/api";
+import { AuthContext } from "../../CustomHooks/Context/AuthProvider";
+import Search from "../Search/Search";
 
 function AddCandidate(){
     const [image, setImage] = useState(null);
     //const [logo, setLogo] = useState(null);
     const hiddenFileInput = useRef(null);
     const navigate = useNavigate();
+    const { userId, userRole } = useContext(AuthContext);
+    const [schoolId, setSchoolId] = useState("");
+    const [studentId, setStudentId] = useState("");
+    const [schoolSearchInputData, setSchoolSearchInputData] = useState(null);
+    const [schoolSearchData, setSchoolSearchData] = useState(null);
+    const [Name, SetName] = useState(null);
     const [formData, setFormData] = useState({
         name: "",
         reg_no: "",
@@ -21,11 +30,22 @@ function AddCandidate(){
         course: "",
     });
 
+    useEffect(()=>{
+        handleSchoolData();
+        if (userRole === "school") {
+            setSchoolId(userId);
+        }
+        else{
+            setSchoolId(schoolSearchInputData)
+        }
+    })
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((formData) => ({
             ...formData,
             [name]: value,
+            name: Name
         }));
     };
 
@@ -35,6 +55,17 @@ function AddCandidate(){
         navigate("/print");
         console.log(formData);
     };
+
+    const handleSchoolData = () => {
+        api
+          .get("/schools")
+          .then((results) => {
+            setSchoolSearchData(results.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
 
 
     const handleImageChange = (event) => {
@@ -75,6 +106,14 @@ function AddCandidate(){
                                 padding: "12px",
                             }}
                         >
+                            <h3 className="school-search text-lg text-center">search for school by name</h3>
+                            <Search
+                            data={schoolSearchData}
+                            setSchoolSearchInputData={setSchoolSearchInputData}
+                            setSchoolId={setSchoolId}
+                            setName={SetName}
+                            setStudentId={setStudentId}
+                            />
                             <Box height={10} />
                             <Typography variant="h3" align="center">
                                 Add Details to Create Certificate
@@ -89,7 +128,7 @@ function AddCandidate(){
                                         <input
                                             type="text"
                                             name="name"
-                                            value={formData.name}
+                                            value={Name}
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
@@ -201,7 +240,7 @@ function AddCandidate(){
                                             Course
                                         </label>
                                         <textarea
-                                            name="topics"
+                                            name="course"
                                             value={formData.course}
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
