@@ -7,7 +7,7 @@ import { MenuItemUnstyled } from "@mui/base";
 
 const Search = ({
   data,
-  setSchoolSearchInputData,
+  setSchoolId,
   setName,
   setEmail,
   setStudentId,
@@ -39,7 +39,7 @@ const Search = ({
 
   const handleSearchFromFill = (searchType, item) => {
     if (searchType === "school") {
-      setSchoolSearchInputData(item);
+      setSchoolId(item.id);
       console.log(item);
     } else {
       setName(`${item?.first_name} ${item?.last_name}`);

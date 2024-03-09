@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, useContext} from "react";
 import { Typography, Box, Card } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { AuthContext } from "../../CustomHooks/Context/AuthProvider";
 import Search from "../Search/Search";
+import Certificate1 from "./Certificate1";
 import MessagePopUp from "../MessagePopUp/MessagePopUp";
 
-function AddCandidate(setCertificateUploadData){
+function AddCandidate(){
     const [image, setImage] = useState(null);
     //const [logo, setLogo] = useState(null);
     const hiddenFileInput = useRef(null);
@@ -17,78 +18,118 @@ function AddCandidate(setCertificateUploadData){
     const [schoolSearchInputData, setSchoolSearchInputData] = useState(null);
     const [schoolSearchData, setSchoolSearchData] = useState(null);
     const [Name, SetName] = useState(null);
+    //const [institutename, setInstituteName] = useState(null);
+    const [certificateUploadData, setCertificateUploadData] = useState(null);
+    const [verificationRequested, setVerificationRequested] = useState(false);
     const [signUpMessage, setSignUpMessage] = useState("");
     const [formData, setFormData] = useState({
-        name: "",
+        student_name: "",
         reg_no: "",
         fathers_name: "",
         ref_no: "",
         date_of_issue: "",
         grade: "",
         image: "",
-        company_name: "VASIREDDY VENKATADRI INSTITUTE OF TECHNOLOGY",
+        institute_name: "VASIREDDY VENKATADRI INSTITUTE OF TECHNOLOGY",
         logo: "https://upload.wikimedia.org/wikipedia/commons/e/ec/VVIT_Logo.png",
         address: "NUMBUR - 522508, ANDHRA PRADESH, INDIA",
         course: "",
+        school_id:""
     });
 
     useEffect(()=>{
         handleSchoolData();
-        if (userRole === "school") {
-            setSchoolId(userId);
-        }
-        else{
-            setSchoolId(schoolSearchInputData)
-        }
     })
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        /*if (userRole === "school") {
+            setSchoolId(userId);
+        }
+        else{
+            setSchoolId(schoolSearchInputData)
+        }*/
         setFormData((formData) => ({
             ...formData,
             [name]: value,
-            name: Name
+            student_name: Name,
+            school_id: schoolId
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        localStorage.setItem('data', JSON.stringify(formData));
+        //localStorage.setItem('data', JSON.stringify(formData));
         // navigate("/print");
-        console.log(formData);if (
-            !formData.name ||
+        console.log(formData);
+        if (
+            !formData.student_name ||
             !formData.reg_no ||
             !formData.fathers_name ||
             !formData.ref_no ||
             !formData.date_of_issue ||
             !formData.image ||
+            !formData.school_id||
             !formData.course
-          ) {
-            setSignUpMessage("Please fill out all fields.");
-            return;
-          }
-          if (userRole === "school") {
-            api
-              .post(`/users/${studentId}/certificates`, formData)
-              .then((response) => {
-                setCertificateUploadData(response.data);
-                console.log(response.data);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          } else {
-            api
-              .post(`/users/${schoolId}/certificates`, formData)
-              .then((response) => {
-                setCertificateUploadData(response.data);
-                console.log(response.data);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
+        ) {
+        setSignUpMessage("Please fill out all fields.");
+        return;
+        }
+        if (userRole === "school") {
+        api
+            .post(`/users/${studentId}/certificates`, formData)
+            .then((response) => {
+            setCertificateUploadData(response.data);
+            console.log(response.data);
+            })
+            .catch((error) => {
+            console.log(error);
+            });
+        } else {
+        api
+            .post(`/users/${userId}/certificates`, formData)
+            .then((response) => {
+            setCertificateUploadData(response.data);
+            console.log(response.data);
+            })
+            .catch((error) => {
+            console.log(error);
+            });
+        }
     };
+
+    const handleRequestVerification = (certificateId) => {
+        setVerificationRequested(true);
+        if (userRole === "school") {
+          const verify = {
+            certificate_status: "verified",
+          };
+    
+          api
+            .post(`/add-certificate/${certificateId}`, verify)
+            .then((response) => {
+              setCertificateUploadData(response.data);
+              // console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          const verify = {
+            certificate_status: "pending",
+          };
+    
+          api
+            .post(`/certificate/${certificateId}/request/verify`, verify)
+            .then((response) => {
+              setCertificateUploadData(response.data);
+              // console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      };
 
     const handleSchoolData = () => {
         api
@@ -217,7 +258,7 @@ function AddCandidate(setCertificateUploadData){
                                             Date of Issue
                                         </label>
                                         <input
-                                            type="text"
+                                            type="date"
                                             name="date_of_issue"
                                             value={formData.date_of_issue}
                                             onChange={handleChange}
@@ -238,12 +279,12 @@ function AddCandidate(setCertificateUploadData){
                                     </div>
                                     {/*<div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Company Name
+                                            Institute Name
                                         </label>
                                         <input
                                             type="text"
                                             name="company_name"
-                                            value={formData.company_name}
+                                            value={institutename}
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
@@ -343,7 +384,14 @@ function AddCandidate(setCertificateUploadData){
                     </Box>
                 </Box>
             </div>
-
+            {!verificationRequested && certificateUploadData && (
+            <div className="certificate-user-data">
+              <Certificate1
+                {...certificateUploadData}
+                handleRequestVerification={handleRequestVerification}
+              />
+            </div>
+          )}
         </>
     );
 };

@@ -78,18 +78,26 @@ def post_certificate(user_id):
         abort(400, description="Not a JSON")
     if 'student_name' not in data:
         abort(400, description="student_name")
-    if 'student_email' not in data:
-        abort(400, description="Missing student email")
-    if "school_id" not in data: 
-        abort(400, 'Missing school id')
-    if "school_name" not in data:
-        abort(400, 'Missing school name')
-    if "school_major" not in data:
-        abort(400, 'Missing school major')
-    if "school_department" not in data:
-        abort(400, "Missing school department")
-    if "school_location" not in data:
-        abort(400, "MIssing school location")
+    if 'reg_no' not in data:
+        abort(400, description="Missing Reg_no")
+    if "fathers_name" not in data: 
+        abort(400, 'Missing Father Name')
+    if "ref_no" not in data:
+        abort(400, 'Missing Ref_no')
+    if "date_of_issue" not in data:
+        abort(400, 'Missing Date of Issue')
+    if "image" not in data:
+        abort(400, "Missing Student Image")
+    if "grade" not in data:
+        abort(400, "Missing Grade")
+    if "institute_name" not in data:
+        abort(400, "Missing Institute Name")
+    if "address" not in data:
+        abort(400, "Missing Address")
+    if "logo" not in data:
+        abort(400, "Missing Logo")
+    if "course" not in data:
+        abort(400, "Missing Course")
 
     data['user_id'] = user_id
     instance = Certificate(**data)
@@ -120,7 +128,7 @@ def put_certificate(user_id, certificate_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'email', 'created_at', 'updated_at']
+    ignore = ['id', 'created_at', 'updated_at']
 
     data = request.get_json()
     for key, value in data.items():
