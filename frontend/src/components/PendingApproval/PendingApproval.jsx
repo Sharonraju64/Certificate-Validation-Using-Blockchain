@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Certificate from "../Certificate/Certificate";
+//import Certificate from "../Certificate/Certificate";
+import Certificate1 from "../AddCertificate/Certificate1";
 import api from "../../api/api";
 import LoadingAnimation from "../Loading/Loading";
+// import { requestJson } from "@fullcalendar/react";
 
 export default function PendingApproval({ userId, userRole }) {
   const [certificates, setCertificates] = useState([]);
@@ -56,7 +58,7 @@ export default function PendingApproval({ userId, userRole }) {
             .filter((certificate) => certificate.verified_certificate === false)
             .map((certificate, index) => (
               <li key={index}>
-                <Certificate
+                <Certificate1
                   {...certificate}
                   handleRequestVerification={handleRequestVerification}
                   userRole={userRole}

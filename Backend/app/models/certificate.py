@@ -27,7 +27,7 @@ class Certificate(BaseModel, Base):
     ref_no = Column(String(10), nullable=False)
     verified_certificate = Column(Boolean, nullable=False, default=False)
     certificate_hash = Column(String(128))
-    data_of_issue = Column(DateTime)
+    date_of_issue = Column(DateTime)
     user_id = Column(String(60), ForeignKey('users.id'))
     school_id = Column(String(60), ForeignKey('schools.id'))
     certificates_verify_status = relationship(

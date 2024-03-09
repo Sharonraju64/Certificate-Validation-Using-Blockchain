@@ -10,9 +10,10 @@ contract CertificateVerifier {
     struct Certificate {
         bytes32 certificateHash; // Hash of the certificate data
         string studentName; // Name of the student associated with the certificate
-        string schoolName; // Name of the school associated with the certificate
-        string schoolMajor; // Major of the student associated with the certificate
-        string schoolDepartment; // Department of the school associated with the certificate
+        string instituteName; // Name of the school associated with the certificate
+        string registrationNumber; // Registration number of student associated with the certificate
+        string fathersName; // Major of the student associated with the certificate
+        string course; // Department of the school associated with the certificate
         bool verified; // Whether the certificate has been verified
     }
 
@@ -23,13 +24,13 @@ contract CertificateVerifier {
     event CertificateVerified(bytes32 certificateHash);
 
     // Event to be emitted when a certificate is added
-    event CertificateAdded(bytes32 indexed certificateHash, string studentName, string schoolName, string schoolMajor, string schoolDepartment);
+    event CertificateAdded(bytes32 indexed certificateHash, string studentName, string instituteName, string registrationNumber, string fathersName, string course);
 
     // Function to add a new certificate to the mapping
-    function addCertificate(string memory _studentName, string memory _schoolName, string memory _schoolMajor, string memory _schoolDepartment, bytes32 _certificateHash) public {
-        certificates[_certificateHash] = Certificate(_certificateHash, _studentName, _schoolName, _schoolMajor, _schoolDepartment, false);
+    function addCertificate(string memory _studentName, string memory _instituteName, string memory _registrationNumber ,string memory _fathersName, string memory _course, bytes32 _certificateHash) public {
+        certificates[_certificateHash] = Certificate(_certificateHash, _studentName, _instituteName, _registrationNumber ,_fathersName, _course, false);
         
-        emit CertificateAdded(_certificateHash, _studentName, _schoolName, _schoolMajor, _schoolDepartment);
+        emit CertificateAdded(_certificateHash, _studentName, _instituteName, _registrationNumber ,_fathersName, _course);
     }
 
     // Function to verify a certificate
@@ -41,7 +42,7 @@ contract CertificateVerifier {
     }
 
     // Function to get the information associated with a certificate
-    function getCertificateInfo(bytes32 _certificateHash) public view returns (bytes32, string memory, string memory, string memory, string memory, bool) {
-        return (certificates[_certificateHash].certificateHash, certificates[_certificateHash].studentName, certificates[_certificateHash].schoolName, certificates[_certificateHash].schoolMajor, certificates[_certificateHash].schoolDepartment, certificates[_certificateHash].verified);
+    function getCertificateInfo(bytes32 _certificateHash) public view returns (bytes32, string memory, string memory, string memory, string memory, string memory, bool) {
+        return (certificates[_certificateHash].certificateHash, certificates[_certificateHash].studentName, certificates[_certificateHash].instituteName, certificates[_certificateHash].registrationNumber, certificates[_certificateHash].fathersName, certificates[_certificateHash].course, certificates[_certificateHash].verified);
     }
 }

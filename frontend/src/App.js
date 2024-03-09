@@ -103,7 +103,7 @@ function App() {
               <AdminSignup authenticated={authenticated} setToken={setToken} />
             }
           />
-          {/* <Route path="/print" exact element={<PrintForm />} /> */}
+          <Route path="/print" exact element={<PrintForm />} />
           {/* protected routes */}
           <Route path="/user/dashboard" element={<UserPageWrapper />} />
           <Route path="/school/dashboard" element={<SchoolWrapper />} />

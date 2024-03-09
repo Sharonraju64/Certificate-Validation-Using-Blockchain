@@ -168,4 +168,13 @@
   .three-columns-grid > * {
     padding: 1rem;
   }
-  
+  button{
+    color: #fff;
+    font-size: 1.2rem;
+    background-color: #c02424;
+    border: 1px solid;
+    margin: 1% 0;
+    padding: 1% 1%;
+    border-radius: 10px;
+    cursor: pointer;
+  }

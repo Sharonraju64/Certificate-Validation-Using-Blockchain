@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Certificate from "../Certificate/Certificate";
+//import Certificate from "../Certificate/Certificate";
+import Certificate1 from "../AddCertificate/Certificate1";
 import api from "../../api/api";
 import LoadingAnimation from "../Loading/Loading";
 
@@ -34,7 +35,7 @@ export default function ApprovedCertificate({ userId }) {
             .filter((certificate) => certificate.verified_certificate === true)
             .map((certificate, index) => (
               <li key={index}>
-                <Certificate {...certificate} />
+                <Certificate1 {...certificate} />
               </li>
             ))}
         </ul>

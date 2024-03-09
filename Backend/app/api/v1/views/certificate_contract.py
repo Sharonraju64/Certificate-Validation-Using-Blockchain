@@ -23,7 +23,7 @@ contract_abi = certificate_json['abi']
 bytecode = certificate_json['bytecode']
 
 w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
-contract_address = "0x771cCc0130384aB15e9d340237E4cc490955EE68"
+contract_address = "0xe923a5fd0FF4890782949cA9CD930b6A0A2CE085"
 contract = w3.eth.contract(
     address=contract_address,
     abi=contract_abi,
@@ -44,15 +44,19 @@ def add_contract_certificate(certificate_id):
 
         data = request.get_json()
         certificate = storage.get(Certificate, certificate_id)
+        #print(data)
         # certificate_data = request.json
-        name = certificate.student_name
-        school_name = certificate.school_name
-        school_major = certificate.school_major
-        school_department = certificate.school_department
+        student_name = certificate.student_name
+        institute_name = certificate.institute_name
+        reg_no = certificate.reg_no
+        father_name = certificate.fathers_name
+        course = certificate.course
 
         # Generate the certificate hash
-        certificate_data_string = f"{name}{school_name}{school_major}{school_department}{certificate_id}{datetime.utcnow()}{os.environ['SECRET_KEY']}"
+        certificate_data_string = f"{student_name}{institute_name}{reg_no}{father_name}{course}{certificate_id}{datetime.utcnow()}{os.environ['SECRET_KEY']}"
         certificate_hash = generate_keccak256_hash(certificate_data_string)
+        # print(certificate_data_string)
+        # print(certificate_hash)
 
         # Get the account that will send the transaction
         # account = w3.eth.accounts[0]
@@ -60,22 +64,27 @@ def add_contract_certificate(certificate_id):
 
         # Build the transaction to add the certificate to the contract
         tx_hash = contract.functions.addCertificate(
-            name,
-            school_name,
-            school_major,
-            school_department,
+            student_name,
+            institute_name,
+            reg_no,
+            father_name,
+            course,
             certificate_hash).transact(
             {
                 'from': account,
             })
 
         # Wait for the transaction to be mined
+        #print(tx_hash)
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+        #print(receipt)
         if not receipt:
             abort(404, description="Failed minting of certificate")
 
         certificate_info = contract.functions.getCertificateInfo(
             certificate_hash).call()
+        #print(certificate_info)
+        print(certificate_info[3])
         if not certificate_info:
             abort(404, description="Certificate not created successfully")
 
@@ -84,11 +93,13 @@ def add_contract_certificate(certificate_id):
         response = {
             'certificate_hash': certificate_info[0].hex(),
             'student_name': certificate_info[1],
-            'school_name': certificate_info[2],
-            'school_major': certificate_info[3],
-            'school_department': certificate_info[4],
-            'verified': certificate_info[5],
+            'institute_name': certificate_info[2],
+            'reg_no': certificate_info[3],
+            'fathers_name': certificate_info[4],
+            'course': certificate_info[5],
+            'verified': certificate_info[6],
         }
+        print(response)
         setattr(certificate, "certificate_hash", certificate_info[0].hex())
         certificate_verification_status = storage.get_certificates_status(VerifyCertificate, certificate.id)
         setattr(certificate_verification_status, "certificate_status", "pending")
@@ -117,10 +128,11 @@ def get_contract_certificate(certificate_hash):
         response = {
             'certificate_hash': certificate_info[0].hex(),
             'student_name': certificate_info[1],
-            'school_name': certificate_info[2],
-            'school_major': certificate_info[3],
-            'school_department': certificate_info[4],
-            'certificate_verify': certificate_info[5],
+            'institute_name': certificate_info[2],
+            'reg_no': certificate_info[3],
+            'fathers_name': certificate_info[4],
+            'course': certificate_info[5],
+            'certificate_verify': certificate_info[6],
         }
 
         return jsonify({'success': True, 'certificate_data': response})
@@ -148,21 +160,28 @@ def verify_contract_certificate(certificate_hash):
                 {'success': False, 'message': 'Transaction failed to execute.'}), 400
         certificate_info = contract.functions.getCertificateInfo(
             bytes.fromhex(certificate_hash)).call()
+        print(account)
+        print(tx_hash)
+        print(receipt)
+        print(certificate_info)
         response = {
             'certificate_hash': certificate_info[0].hex(),
             'student_name': certificate_info[1],
-            'school_name': certificate_info[2],
-            'school_major': certificate_info[3],
-            'school_department': certificate_info[4],
-            'certificate_verify': certificate_info[5],
+            'institute_name': certificate_info[2],
+            'reg_no': certificate_info[3],
+            'fathers_name': certificate_info[4],
+            'course': certificate_info[5],
+            'certificate_verify': certificate_info[6],
         }
+        print(response)
         certificate_data = certificate.to_dict()
-
+        print(certificate_data)
         for key, value in certificate_data.items():
             if key not in response:
                 response["key"] = value
-        setattr(certificate, "verified_certificate", certificate_info[5])
+        setattr(certificate, "verified_certificate", certificate_info[6])
         certificate_verification_status = storage.get_certificates_status(VerifyCertificate, certificate.id)
+        print(certificate_verification_status)
         setattr(certificate_verification_status, "certificate_status", "verified")
         storage.save()
 

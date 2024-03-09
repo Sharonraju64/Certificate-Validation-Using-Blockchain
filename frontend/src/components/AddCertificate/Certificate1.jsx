@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './certificate.css';
-//import { useParams } from 'react-router-dom';
+import PendingIcon from "@mui/icons-material/Pending";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import api from "../../api/api";
 import QRCode from 'qrcode.react';
-//import { useNavigate } from "react-router-dom";
+// import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
+import { useNavigate } from "react-router-dom";
 
 const Certificate1 = ({
     student_name,
@@ -15,68 +19,150 @@ const Certificate1 = ({
     institute_name,
     logo,
     address,
-    course
+    course,
+    userRole,
+    id,
+    certificate_status,
+    setCertificateUpdate,
+    certificate_hash,
+    handleRequestVerification
 }) => {
-    //const { id } = useParams();
     const [showform, setShowform] = useState(false);
     const [qdata, setQdata] = useState("");
-    /*const [formData, setFormData] = useState({
-        student_name: '',
-        reg_no: '',
-        fathers_name: '',
-        ref_no: '',
-        date_of_issue: '',
-        grade: '',
-        image: '',
-        institute_name: '',
-        logo: '',
-        address: '',
-        course: '',
-    });*/
-
-
-    /*useEffect(() => {
-        fetchData();
-    }, []);*/
-
     useEffect(() => {
-        setQRData();
         setShowform(true);
+        setQRData();
+        console.log(setCertificateUpdate);
     });
+    const navigate = useNavigate();
 
     const setQRData = () => {
         var name = student_name;
-        var reg_no = reg_no;
-        var fathers_name = fathers_name;
-        var ref_no = ref_no;
-        var date_of_issue = date_of_issue;
-        var grade = grade;
-        var institute_name = institute_name;
+        var reg = reg_no;
+        var father_name = fathers_name;
+        var refno = ref_no;
+        var dateofissue = date_of_issue;
+        var Grade = grade;
+        var institutename = institute_name;
 
         var url =
             "Name: " +
             name +
             "\n" +
             "Reg No: " +
-            reg_no +
+            reg +
             "\n" +
             "Ref No: " +
-            ref_no +
+            refno +
             "\n" +
             "Father Name: " +
-            fathers_name +
+            father_name +
             "\n" +
             "Date of Issue: " +
-            date_of_issue +
+            dateofissue +
             "\n" +
             "Grade: " +
-            grade +
+            Grade +
             "\n" +
             "Company: " +
-            institute_name
+            institutename
         setQdata(url);
-
     }
+
+    const handleCertificateAddBlockchain = async (certificateId) => {
+        if (typeof window.ethereum === "undefined") {
+          console.error("Please install MetaMask.");
+          return;
+        }
+    
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const account = accounts[0];
+    
+        const data = {
+          account: account,
+        };
+    
+        api
+          .post(`/add-certificate/${certificateId}`, data)
+          .then((response) => {
+            setCertificateUpdate(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        console.log(certificateId);
+        console.log(data);
+    };
+    
+    const handleCertificateVerifyCertificate = async (certificate_hash, id) => {
+        if (typeof window.ethereum === "undefined") {
+          console.error("Please install MetaMask.");
+          return;
+        }
+    
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const account = accounts[0];
+    
+        const data = {
+          account: account,
+          certificate_id: id,
+        };
+        api
+          .put(`/verify-certificate/${certificate_hash}`, data)
+          .then((response) => {
+            setCertificateUpdate(response.data);
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+    
+    
+    const handleDownloadPDF = (id) => {
+        console.log(id);
+        navigate('/print',{state:{certificateid:id}})
+        /*const input = document.querySelector(".certificate");
+    
+        html2canvas(input).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+    
+            const pdf = new jsPDF({
+                orientation: "landscape",
+                unit: "mm",
+                format: "a4",
+                compress: true,
+            });
+    
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth() - 6; // subtract 3mm on each side
+            const pdfHeight = pdf.internal.pageSize.getHeight() - 6; // subtract 3mm on each side
+            const imgWidth = imgProps.width;
+            const imgHeight = imgProps.height;
+        
+            const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+        
+            const centerX = (pdfWidth - imgWidth * ratio) / 2 + 3; // add 3mm left margin
+            const centerY = (pdfHeight - imgHeight * ratio) / 2 + 3; // add 3mm top margin
+        
+            pdf.addImage(
+                imgData,
+                "PNG",
+                centerX,
+                centerY,
+                imgWidth * ratio,
+                imgHeight * ratio,
+                null,
+                "FAST"
+            );
+        
+            pdf.save("certificate.pdf");
+        });*/
+    };
 
     /*const fetchData = async () => {
         try {
@@ -132,6 +218,7 @@ const Certificate1 = ({
                                     <div className="flex-1 w-32 pl-40">
                                         <img className='image'
                                             src={image}
+                                            alt='Student'
                                             style={{
                                                 borderRadius:
                                                     "15px",
@@ -198,7 +285,46 @@ const Certificate1 = ({
                                     </p>
                                 </div>
                             </div>
+                            <div className="footer">
+                                {/* {certificate_hash && <p>certificate hash {certificate_hash}. </p>} */}
+                                {certificate_status === "unverified" && userRole !== "school" && (
+                                    <button
+                                    onClick={() => {
+                                        handleRequestVerification(id);
+                                    }}
+                                    >
+                                    verification request
+                                    </button>
+                                )}
+                                {userRole === "school" && !certificate_hash && (
+                                    <button
+                                    onClick={() => {
+                                        handleCertificateAddBlockchain(id);
+                                    }}
+                                    >
+                                    Add certificate to blockchain
+                                    </button>
+                                )}
+                                {userRole === "school" && certificate_hash && (
+                                    <button
+                                    onClick={() => {
+                                        handleCertificateVerifyCertificate(certificate_hash, id);
+                                    }}
+                                    >
+                                    verify certificate
+                                    </button>
+                                )}
+                                {certificate_status === "pending" && userRole !== "school" && (
+                                    <PendingIcon />
+                                )}
+                                {certificate_status === "verified" && <VerifiedUserIcon />}
+                            </div>
                         </div>
+                        {certificate_status === "verified" && (
+                            <button onClick={()=>{
+                                handleDownloadPDF(id)
+                            }}>Download PDF</button>
+                        )}
                     </div>
                 </div>
             )}
