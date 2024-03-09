@@ -30,6 +30,7 @@ function AddCandidate(){
         date_of_issue: "",
         grade: "",
         image: "",
+        year_of_pass:"",
         institute_name: "VASIREDDY VENKATADRI INSTITUTE OF TECHNOLOGY",
         logo: "https://upload.wikimedia.org/wikipedia/commons/e/ec/VVIT_Logo.png",
         address: "NUMBUR - 522508, ANDHRA PRADESH, INDIA",
@@ -68,6 +69,7 @@ function AddCandidate(){
             !formData.fathers_name ||
             !formData.ref_no ||
             !formData.date_of_issue ||
+            !formData.year_of_pass ||
             !formData.image ||
             !formData.school_id||
             !formData.course
@@ -277,19 +279,19 @@ function AddCandidate(){
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
                                     </div>
-                                    {/*<div className="mb-4">
+                                    <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
-                                            Institute Name
+                                            Year of Pass
                                         </label>
                                         <input
                                             type="text"
-                                            name="company_name"
-                                            value={institutename}
+                                            name="year_of_pass"
+                                            value={formData.year_of_pass}
                                             onChange={handleChange}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         />
                                     </div>
-                                    <div className="mb-4">
+                                    {/*<div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="whatsapp_no">
                                             Logo URL
                                         </label>

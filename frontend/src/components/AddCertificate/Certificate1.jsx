@@ -14,6 +14,7 @@ const Certificate1 = ({
     ref_no,
     fathers_name,
     date_of_issue,
+    year_of_pass,
     grade,
     image,
     institute_name,
@@ -241,7 +242,7 @@ const Certificate1 = ({
                                 </p>
                                 <p className="text-lg text-center text-blue-600 italic mb-2">
                                     <span>
-                                    examination held during 2023 in {grade ? <strong className="ml-7">  {grade}  </strong> : ""}
+                                    examination held during {year_of_pass ? <strong className='ml-7'> {year_of_pass} </strong> : ""} in {grade ? <strong className="ml-7">  {grade}  </strong> : ""}
                                     </span>
                                 </p>
                                 <p className="text-lg text-center text-blue-600 italic">
