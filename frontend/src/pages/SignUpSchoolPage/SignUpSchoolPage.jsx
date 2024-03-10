@@ -13,6 +13,7 @@ export default function SignUpSchoolPage() {
   const { authenticated, userRole, setToken } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log(userRole);
     if (authenticated && userRole === "school") {
       navigate("/school/dashboard");
     }

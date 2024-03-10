@@ -50,7 +50,7 @@ export default function SignInAdmin({ authenticated, setToken, userRole }) {
           label="admin email"
           type="admin email"
           name="admin email"
-          placeholder="admin email"
+          placeholder="Email"
           value={signInEmail}
           setValue={setSignInEmail}
         />

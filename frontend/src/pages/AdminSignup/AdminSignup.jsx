@@ -10,8 +10,9 @@ export default function AdminSignup() {
   const { authenticated, userRole, setToken } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log(userRole);
     if (authenticated && userRole === "admin") {
-      navigate("/admin/dashboard");
+      navigate("/verify");
     }
   }, [authenticated, navigate, userRole]);
 

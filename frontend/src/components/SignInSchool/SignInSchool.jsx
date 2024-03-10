@@ -50,10 +50,10 @@ export default function SignInSchool({ authenticated, setToken, userRole }) {
           <h1>Sign In</h1>
         </div>
         <TextInput
-          label="school email"
+          label="institute email"
           type="school email"
           name="school email"
-          placeholder="school email"
+          placeholder="Institute Email"
           value={signInEmail}
           setValue={setSignInEmail}
         />

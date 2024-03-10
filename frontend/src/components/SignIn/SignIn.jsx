@@ -12,6 +12,7 @@ export default function SignIn({ authenticated, setToken, token }) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  console.log(authenticated);
   if (authenticated) {
     navigate("/user/dashboard");
   }
@@ -60,7 +61,7 @@ export default function SignIn({ authenticated, setToken, token }) {
             label="email"
             type="email"
             name="email"
-            placeholder="email"
+            placeholder="Email"
             value={signInEmail}
             setValue={setSignInEmail}
           />

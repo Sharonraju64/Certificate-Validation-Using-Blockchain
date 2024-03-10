@@ -228,19 +228,19 @@ const Certificate1 = ({
                                         />
                                     </div>
                                 </div>
-                                <h4 className="mt-1 mb-2">Certificate of Achievement Awarded to</h4>
-                                <p className="text-lg text-center text-blue-600 italic mb-2">
+                                <h4 className="mt-1 mb-1">Certificate of Achievement Awarded to</h4>
+                                <p className="text-lg text-center text-blue-600 italic mb-1">
                                     Mr / Ms. {student_name ? <strong className="ml-7">  {student_name}  </strong> : ""}
                                 </p>
-                                <p className="text-lg text-center text-blue-600 italic mb-2">
+                                <p className="text-lg text-center text-blue-600 italic mb-1">
                                     S/o / D/o. {fathers_name ? <strong className="ml-7">  {fathers_name}  </strong> : "_"}
                                 </p>
-                                <p className="text-lg text-center text-blue-600 italic mb-2">
+                                <p className="text-lg text-center text-blue-600 italic mb-1">
                                     <span>
                                         having fulfilled the academic requirements and passed the
                                     </span>
                                 </p>
-                                <p className="text-lg text-center text-blue-600 italic mb-2">
+                                <p className="text-lg text-center text-blue-600 italic mb-1">
                                     <span>
                                     examination held during {year_of_pass ? <strong className='ml-7'> {year_of_pass} </strong> : ""} in {grade ? <strong className="ml-7">  {grade}  </strong> : ""}
                                     </span>
@@ -253,7 +253,7 @@ const Certificate1 = ({
                                 </p>
                                 <p className="text-lg text-center ml-2 mt-2 text-sm">
                                     {course}
-                                </p><br />
+                                </p>
                                 <p className="text-lg text-left text-blue-600 italic">
                                 <span>
                                     HTNo: {reg_no ? <strong>  {reg_no}  </strong> : ""}
@@ -287,7 +287,7 @@ const Certificate1 = ({
                                 </div>
                             </div>
                             <div className="footer">
-                                {/* {certificate_hash && <p>certificate hash {certificate_hash}. </p>} */}
+                                {certificate_hash && <p className='text-center'>Certificate Hash: {certificate_hash}. </p>}
                                 {certificate_status === "unverified" && userRole !== "school" && (
                                     <button
                                     onClick={() => {

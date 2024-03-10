@@ -43,8 +43,6 @@ const PrintForm = ()=> {
                         </div>
                     </div>
                 </div>
-
-
                 <div ref={componentRef} style={{ marginLeft: "20px", marginRight: "20px", marginTop: "0px" }}>
                     <div>
                         {/* <PatnaToolsCertificate /> */}

@@ -70,7 +70,7 @@ export default function SignUpInput() {
           label="email"
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="Email"
           value={userEmail}
           setValue={setUserEmail}
         />

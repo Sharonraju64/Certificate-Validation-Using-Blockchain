@@ -1,9 +1,8 @@
 import React from "react";
-import logo from "./Logo.svg";
 import "./NavBar.css";
-import { TbCertificate } from "react-icons/tb";
-import { FcAbout, FcApproval, FcClock } from "react-icons/fc";
-import { BsPersonFill } from "react-icons/bs";
+import logo from '../../utils/logo.jpeg';
+import profile from '../../utils/profile.png';
+import { FcApproval, FcClock } from "react-icons/fc";
 
 export default function NavBar({
   handleMenuClick,
@@ -31,9 +30,9 @@ export default function NavBar({
           }}
           data-tooltip="Profile"
         >
-          <BsPersonFill />
+          <img className="profile" src={profile} alt="profile" />
         </div>
-        <div
+        {/* <div
           className={
             activeMenu === "UserCertificates"
               ? "active nav_content"
@@ -45,7 +44,7 @@ export default function NavBar({
           data-tooltip="Certificates"
         >
           <TbCertificate />
-        </div>
+        </div> */}
         <div
           className={
             activeMenu === "ApprovedCertificate"
@@ -72,7 +71,7 @@ export default function NavBar({
         >
           <FcClock />
         </div>
-        <div
+        {/* <div
           className={
             activeMenu === "About"
               ? "active about-section nav_content"
@@ -84,7 +83,7 @@ export default function NavBar({
           data-tooltip="About"
         >
           <FcAbout />
-        </div>
+        </div> */}
         <button onClick={handleLogOut} className="log_out">
           Log out
         </button>

@@ -10,6 +10,7 @@ import Admin from "./pages/Admin/Admin";
 import VerifyCertificate from "./pages/VerifyCertificate/VerifyCertificate";
 import AdminSignup from "./pages/AdminSignup/AdminSignup";
 import PrintForm from "./components/AddCertificate/PrintForm";
+import Home from "./pages/Home";
 // import RequireAuth from "./components/RequireAuth/RequireAuth";
 // import Unauthorized from "./components/Unauthorized/Unauthorized";
 
@@ -76,8 +77,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route
-            path="/"
+            path="/user/signup"
             element={
               <Signup
                 authenticated={authenticated}

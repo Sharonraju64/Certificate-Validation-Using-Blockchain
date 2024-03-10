@@ -1,6 +1,12 @@
 .NavBar img {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
+  padding-bottom: 20px;
+}
+
+.profile{
+  width: 80px;
+  height: 50px;
 }
 .sidebar-container {
   display: flex;

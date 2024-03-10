@@ -11,6 +11,7 @@ export default function SignUp({ authenticated, setToken, token }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(authenticated);
     if (authenticated) {
       navigate("/user/dashboard");
     }

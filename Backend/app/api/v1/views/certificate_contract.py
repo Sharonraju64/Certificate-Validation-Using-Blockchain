@@ -23,7 +23,7 @@ contract_abi = certificate_json['abi']
 bytecode = certificate_json['bytecode']
 
 w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
-contract_address = "0xe923a5fd0FF4890782949cA9CD930b6A0A2CE085"
+contract_address = "0xd215C706989C86743Ab328d95bc1B36dF358625D"
 contract = w3.eth.contract(
     address=contract_address,
     abi=contract_abi,
@@ -46,14 +46,14 @@ def add_contract_certificate(certificate_id):
         certificate = storage.get(Certificate, certificate_id)
         #print(data)
         # certificate_data = request.json
+        certificate_id = certificate.id
         student_name = certificate.student_name
         institute_name = certificate.institute_name
         reg_no = certificate.reg_no
         father_name = certificate.fathers_name
-        course = certificate.course
 
         # Generate the certificate hash
-        certificate_data_string = f"{student_name}{institute_name}{reg_no}{father_name}{course}{certificate_id}{datetime.utcnow()}{os.environ['SECRET_KEY']}"
+        certificate_data_string = f"{certificate_id}{student_name}{institute_name}{reg_no}{father_name}{certificate_id}{datetime.utcnow()}{os.environ['SECRET_KEY']}"
         certificate_hash = generate_keccak256_hash(certificate_data_string)
         # print(certificate_data_string)
         # print(certificate_hash)
@@ -64,11 +64,11 @@ def add_contract_certificate(certificate_id):
 
         # Build the transaction to add the certificate to the contract
         tx_hash = contract.functions.addCertificate(
+            certificate_id,
             student_name,
             institute_name,
             reg_no,
             father_name,
-            course,
             certificate_hash).transact(
             {
                 'from': account,
@@ -92,11 +92,11 @@ def add_contract_certificate(certificate_id):
         # Construct the response JSON
         response = {
             'certificate_hash': certificate_info[0].hex(),
-            'student_name': certificate_info[1],
-            'institute_name': certificate_info[2],
-            'reg_no': certificate_info[3],
-            'fathers_name': certificate_info[4],
-            'course': certificate_info[5],
+            'certificate_id': certificate_info[1],
+            'student_name': certificate_info[2],
+            'institute_name': certificate_info[3],
+            'reg_no': certificate_info[4],
+            'fathers_name': certificate_info[5],
             'verified': certificate_info[6],
         }
         print(response)
@@ -127,11 +127,11 @@ def get_contract_certificate(certificate_hash):
         # Construct the response JSON
         response = {
             'certificate_hash': certificate_info[0].hex(),
-            'student_name': certificate_info[1],
-            'institute_name': certificate_info[2],
-            'reg_no': certificate_info[3],
-            'fathers_name': certificate_info[4],
-            'course': certificate_info[5],
+            'certificate_id': certificate_info[1],
+            'student_name': certificate_info[2],
+            'institute_name': certificate_info[3],
+            'reg_no': certificate_info[4],
+            'fathers_name': certificate_info[5],
             'certificate_verify': certificate_info[6],
         }
 
@@ -166,11 +166,11 @@ def verify_contract_certificate(certificate_hash):
         print(certificate_info)
         response = {
             'certificate_hash': certificate_info[0].hex(),
-            'student_name': certificate_info[1],
-            'institute_name': certificate_info[2],
-            'reg_no': certificate_info[3],
-            'fathers_name': certificate_info[4],
-            'course': certificate_info[5],
+            'certificate_id': certificate_info[1],
+            'student_name': certificate_info[2],
+            'institute_name': certificate_info[3],
+            'reg_no': certificate_info[4],
+            'fathers_name': certificate_info[5],
             'certificate_verify': certificate_info[6],
         }
         print(response)

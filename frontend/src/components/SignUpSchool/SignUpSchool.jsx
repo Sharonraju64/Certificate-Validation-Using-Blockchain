@@ -55,7 +55,7 @@ export default function SignUpSchool({ setShowSignUp }) {
           label="School Name"
           type="text"
           name="name"
-          placeholder="School Name"
+          placeholder="Institute Name"
           value={schoolName}
           setValue={setSchoolName}
         />
@@ -63,7 +63,7 @@ export default function SignUpSchool({ setShowSignUp }) {
           label="School Location"
           type="text"
           name="name"
-          placeholder="School Location"
+          placeholder="Institute Location"
           value={schoolLocation}
           setValue={setSchoolLocation}
         />
@@ -71,7 +71,7 @@ export default function SignUpSchool({ setShowSignUp }) {
           label="school email"
           type="school email"
           name="school email"
-          placeholder="school Email"
+          placeholder="Institute Email"
           value={schoolEmail}
           setValue={setSchoolEmail}
         />

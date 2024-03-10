@@ -89,8 +89,8 @@
     padding: 3px;
   }
   .logo{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   
   .qrcode {
@@ -149,8 +149,8 @@
   }
   
   .footer {
-    text-align: center;
-    width: 76%;
+    text-align: left;
+    width: 100%;
     margin: auto;
     padding: 10px;
   }

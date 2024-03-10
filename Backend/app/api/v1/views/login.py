@@ -16,6 +16,7 @@ import os
 def login():
     # Get the provided username and password from the request
     data = request.get_json()
+    print(data)
     # Check if the password field is empty
     if 'password' not in data or not data['password']:
         return jsonify({'message': 'Password field is required'}), 400
@@ -28,12 +29,15 @@ def login():
     user_mail = data.get('userMail')
     password = data.get('password')
     user = storage.get_email(User, user_mail)
+    print(user)
     school = storage.get_email(School, user_mail)
+    print(school)
     if not user and not school:
         return jsonify({'message': 'Invalid password and name'}), 401
 
     if user:
         if user.check_password(password):
+            print(password)
             # If the password is valid, generate an authentication token
             try:
                 exp_timestamp = datetime.timestamp(

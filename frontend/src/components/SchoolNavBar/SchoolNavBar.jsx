@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "./Logo.svg";
+import logo from '../../utils/logo.jpeg';
+import profile from '../../utils/profile.png';
 import "./SchoolNavBar.css";
 import { TbCertificate } from "react-icons/tb";
-import { FcAbout, FcApproval, FcClock } from "react-icons/fc";
-import { BsPersonFill } from "react-icons/bs";
+import { FcApproval, FcClock } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar({
@@ -17,7 +17,7 @@ export default function NavBar({
     localStorage.removeItem("appCertificate");
     setAuthenticated(false);
     setToken(null);
-    navigate("/school/signup");
+    navigate("/");
   };
   return (
     <nav className="sidebar-container">
@@ -34,7 +34,7 @@ export default function NavBar({
           }}
           data-tooltip="Profile"
         >
-          <BsPersonFill />
+          <img className="profile" src={profile} alt="profile" />
         </div>
         <div
           className={
@@ -75,7 +75,7 @@ export default function NavBar({
         >
           <FcClock />
         </div>
-        <div
+        {/* <div
           className={
             activeMenu === "About"
               ? "active about-section nav_content"
@@ -87,7 +87,7 @@ export default function NavBar({
           data-tooltip="About"
         >
           <FcAbout />
-        </div>
+        </div> */}
         <button
           onClick={() => {
             handleLogOut();
