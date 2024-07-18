@@ -23,7 +23,7 @@ export default function VerifyCertificate() {
     api
       .get(`/get-certificate/${inputValue}`)
       .then((response) => {
-        if (response?.data?.success === true) {
+        if (response?.data?.certificate_data?.certificate_verify === true) {
           setVerified(true);
           setId(response?.data?.certificate_data?.certificate_id);
           console.log(id);
@@ -39,6 +39,10 @@ export default function VerifyCertificate() {
       .finally(() => {
         setInputValue("");
       });
+    setInputValue("");
+  };
+
+  const handlecertificate=() =>{
     api
       .get(`/certificate/${id}`)
       .then((response) => {
@@ -47,8 +51,7 @@ export default function VerifyCertificate() {
     .catch((error) => {
           console.log(error);
     })
-    setInputValue("");
-  };
+  }
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -66,14 +69,15 @@ export default function VerifyCertificate() {
               placeholder="Enter certificate hash"
             />
             <button type="submit">Check</button>
+            <button onClick={handlecertificate}>Get Certificate</button>
           </div>
           <p>
             To verify your certificate, please enter your certificate hash in
             the input field below and click on the Check button.
           </p>
-          {notVerified && (
+          {/*notVerified && (
             <p className="not-verified">Certificate not verified</p>
-          )}
+          )*/}
           {verified && (
             <p className="verified">Certificate is verified</p>
           )}

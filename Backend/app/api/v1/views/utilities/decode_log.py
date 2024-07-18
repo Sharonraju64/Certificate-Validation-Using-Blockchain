@@ -8,7 +8,7 @@ import re
 
 
 def format_raw_data(logs, event_name):
-    with open("/home/queens/Blockchain-Certificate-Verification-System/Backend/contracts/artifacts/contracts/Certificate.sol/CertificateVerifier.json") as f:
+    with open("D:\Blockchain-Certificate-Verification-System-main/Backend/build/contracts/CertificateVerifier.json") as f:
         data = json.load(f)
     abi = data['abi']
     types = []

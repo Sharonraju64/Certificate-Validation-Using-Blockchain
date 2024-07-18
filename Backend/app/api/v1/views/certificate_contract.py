@@ -23,7 +23,7 @@ contract_abi = certificate_json['abi']
 bytecode = certificate_json['bytecode']
 
 w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
-contract_address = "0xd215C706989C86743Ab328d95bc1B36dF358625D"
+contract_address = "0x859dB2A401d1a54596487cd50399666151bEC5Af"
 contract = w3.eth.contract(
     address=contract_address,
     abi=contract_abi,

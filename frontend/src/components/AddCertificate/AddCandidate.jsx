@@ -186,7 +186,7 @@ function AddCandidate(){
                                 padding: "12px",
                             }}
                         >
-                            <h3 className="school-search text-lg text-center">search for school by name</h3>
+                            <h3 className="school-search text-lg text-center">search for institute by name</h3>
                             <Search
                             data={schoolSearchData}
                             setSchoolSearchInputData={setSchoolSearchInputData}

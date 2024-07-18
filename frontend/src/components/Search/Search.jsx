@@ -79,7 +79,7 @@ const Search = ({
             handleDropdownSelect(e.target.value);
           }}
         >
-          <option value="school">Schools</option>
+          <option value="school">Institute</option>
           <option value="student">Students</option>
         </select>
       )}
